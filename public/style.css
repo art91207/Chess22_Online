@@ -1,0 +1,279 @@
+/* public/style.css — Chess Online (dark UI + lichess-like board vibe) */
+
+:root{
+  /* App UI */
+  --bg:#0f1115;
+  --card:#171a20;
+  --card2:#141826;
+  --muted:#9aa3b2;
+  --text:#eef2ff;
+
+  --btn:#232836;
+  --btnHover:#2b3245;
+  --btnBorder:rgba(255,255,255,0.12);
+
+  --accent:#4f7cff;
+  --accentBorder:rgba(79,124,255,0.35);
+
+  --border:rgba(255,255,255,0.10);
+  --shadow:0 24px 90px rgba(0,0,0,0.45);
+
+  /* Board (lichess style colors) */
+  --sqLight:#F0D9B5;
+  --sqDark:#B58863;
+  --boardBorder:#6B4F35;
+}
+
+*{ box-sizing:border-box; }
+
+html, body { height:100%; }
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 800px at 20% 0%, #1b2030 0%, var(--bg) 55%),
+    radial-gradient(900px 600px at 90% 30%, rgba(79,124,255,0.10) 0%, rgba(0,0,0,0) 60%);
+}
+
+/* Layout */
+.wrap{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+
+.card{
+  width:min(1180px, 96vw);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+/* Topbar */
+.topbar{
+  display:flex;
+  gap:14px;
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.22);
+}
+
+.topbar .left{ flex:1; }
+.topbar .right{ flex:1; }
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.row.meta{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+#roomCode{
+  width:160px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:#0f1320;
+  color:var(--text);
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  outline:none;
+}
+
+#roomCode:focus{
+  border-color: rgba(79,124,255,0.55);
+  box-shadow: 0 0 0 3px rgba(79,124,255,0.15);
+}
+
+/* Dropdowns (Host Color + Board Size) */
+#hostColor,
+#boardSize{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:#0f1320;
+  color:var(--text);
+  font-weight:800;
+  outline:none;
+}
+
+#hostColor:focus,
+#boardSize:focus{
+  border-color: rgba(79,124,255,0.55);
+  box-shadow: 0 0 0 3px rgba(79,124,255,0.15);
+}
+
+/* Buttons */
+button{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--btnBorder);
+  background:var(--btn);
+  color:var(--text);
+  cursor:pointer;
+  transition: transform 80ms ease, background 120ms ease, border-color 120ms ease;
+  user-select:none;
+}
+
+button:hover{ background:var(--btnHover); }
+button:active{ transform: translateY(1px); }
+
+button:disabled{
+  opacity:0.55;
+  cursor:not-allowed;
+  transform:none;
+}
+
+button.primary{
+  background: linear-gradient(180deg, rgba(79,124,255,0.95), rgba(79,124,255,0.70));
+  border-color: var(--accentBorder);
+}
+
+button.primary:hover{
+  background: linear-gradient(180deg, rgba(79,124,255,1), rgba(79,124,255,0.75));
+}
+
+/* Badge */
+.badge{
+  padding:8px 10px;
+  border-radius:999px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.10);
+  color:var(--muted);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+/* Setup panel */
+.setup{
+  gap:10px;
+  padding:10px 0 0;
+}
+
+.setup .label{
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+}
+
+.palette{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.pieceBtn{
+  width:40px;
+  height:40px;
+  padding:0;
+  font-weight:900;
+  font-size:16px;
+}
+
+#eraserBtn{
+  height:40px;
+  font-weight:800;
+}
+
+.pieceBtn.active,
+#eraserBtn.active{
+  outline:2px solid rgba(79,124,255,0.95);
+  outline-offset:1px;
+}
+
+.sep{
+  display:inline-block;
+  width:10px;
+}
+
+/* Board container */
+.boardWrap{
+  display:flex;
+  justify-content:center;
+  padding:16px;
+}
+
+#boardCanvas{
+  /* IMPORTANT: do not force CSS width/height, let canvas control it (prevents click offset) */
+  border-radius:14px;
+  border: 2px solid rgba(255,255,255,0.10);
+  box-shadow: 0 16px 60px rgba(0,0,0,0.40);
+  background: linear-gradient(135deg, var(--sqLight), var(--sqDark));
+}
+
+/* Footer */
+.foot{
+  padding:10px 16px 16px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.hint{
+  text-align:center;
+  opacity:0.95;
+}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.55);
+  padding:14px;
+}
+
+.hidden{ display:none; }
+
+.modalCard{
+  width:min(420px, 92vw);
+  background: var(--card2);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;
+  padding:16px;
+  box-shadow: 0 22px 80px rgba(0,0,0,0.50);
+}
+
+.modalTitle{
+  font-weight:900;
+  font-size:18px;
+  margin-bottom:12px;
+}
+
+.modalBtns{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.modalBtns button{
+  flex:1;
+  min-width:120px;
+}
+
+.modalCancel{
+  margin-top:12px;
+  width:100%;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px){
+  .topbar{ flex-direction:column; }
+  #roomCode{ width:100%; max-width:280px; }
+  .row.meta{ gap:8px; }
+}

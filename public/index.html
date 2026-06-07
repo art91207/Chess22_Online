@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chess Online (8×8 / 15×15 / 22×22)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div class="left">
+          <div class="row">
+            <input id="roomCode" placeholder="ROOM CODE" maxlength="5" />
+
+            <select id="hostColor">
+              <option value="white" selected>Host: White</option>
+              <option value="black">Host: Black</option>
+            </select>
+
+            <select id="boardSize">
+              <option value="8">Board: 8×8</option>
+              <option value="15">Board: 15×15</option>
+              <option value="22" selected>Board: 22×22</option>
+            </select>
+
+            <button id="createBtn">Create</button>
+            <button id="joinBtn">Join</button>
+            <span id="roleBadge" class="badge">Not in room</span>
+          </div>
+
+          <div class="row meta">
+            <span id="status"></span>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="row meta">
+            <span id="phaseText">Phase: —</span>
+            <span id="turnText">Turn: —</span>
+            <span id="checkText"></span>
+            <span id="resultText"></span>
+          </div>
+
+          <div class="row actions">
+            <button id="offerDrawBtn">Offer Draw</button>
+            <button id="acceptDrawBtn">Accept Draw</button>
+            <button id="declineDrawBtn">Decline</button>
+            <button id="resignBtn">Resign</button>
+            <button id="newGameBtn" class="primary">New Game</button>
+          </div>
+
+          <div id="setupPanel" class="row setup">
+            <span class="label">Setup (host only):</span>
+
+            <div class="palette">
+              <button class="pieceBtn" data-piece="wK">K</button>
+              <button class="pieceBtn" data-piece="wQ">Q</button>
+              <button class="pieceBtn" data-piece="wR">R</button>
+              <button class="pieceBtn" data-piece="wB">B</button>
+              <button class="pieceBtn" data-piece="wN">N</button>
+              <button class="pieceBtn" data-piece="wP">P</button>
+
+              <span class="sep"></span>
+
+              <button class="pieceBtn" data-piece="bK">k</button>
+              <button class="pieceBtn" data-piece="bQ">q</button>
+              <button class="pieceBtn" data-piece="bR">r</button>
+              <button class="pieceBtn" data-piece="bB">b</button>
+              <button class="pieceBtn" data-piece="bN">n</button>
+              <button class="pieceBtn" data-piece="bP">p</button>
+
+              <span class="sep"></span>
+
+              <button id="eraserBtn">Eraser</button>
+            </div>
+
+            <button id="clearBtn">Clear</button>
+            <button id="startBtn" class="primary">Start Game</button>
+
+            <div class="setupCodeRow">
+              <textarea id="setupCode" rows="2" spellcheck="false" placeholder="Setup code (copy/paste)"></textarea>
+              <div class="setupCodeBtns">
+                <button id="copySetupBtn">Copy Setup</button>
+                <button id="loadSetupBtn">Load Setup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="boardWrap">
+        <canvas id="boardCanvas"></canvas>
+      </div>
+
+      <div class="foot">
+        <div class="hint">
+          Left click clears highlights/arrows. Right click = circle. Right drag = arrow.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promotion modal -->
+  <div id="promoModal" class="modal hidden">
+    <div class="modalCard">
+      <div class="modalTitle">Choose promotion</div>
+      <div class="modalBtns">
+        <button class="promoBtn" data-p="q">Queen</button>
+        <button class="promoBtn" data-p="r">Rook</button>
+        <button class="promoBtn" data-p="b">Bishop</button>
+        <button class="promoBtn" data-p="n">Knight</button>
+      </div>
+      <button id="promoCancel" class="modalCancel">Cancel</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
